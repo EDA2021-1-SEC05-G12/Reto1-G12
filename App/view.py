@@ -90,22 +90,24 @@ while True:
     elif int(inputs[0]) == 3:
         t1=time.process_time()
         print("Cargando Video con mas trading segun su país ....")
+        country=input('Ingrese el pais que desea ver: ')
+        controller.req2(country,catalog)
         t2=time.process_time()
         print('El tiempo de procesamiento es: {}.'.format(t2-t1))
 
     elif int(inputs[0]) == 4:
         t1=time.process_time()
         print("Cargando Video con mas trading segun su categoría ....")
-        country= input("Ingrese el pais del video que desea ver:\n")
-        tag=input("Ingrese el tag del video que desea ver:\n")
-        num=input("Ingrese el numero de videos que desea ver:\n")
-        controller.req4(country,tag,num,catalog)
         t2=time.process_time()
         print('El tiempo de procesamiento es: {}.'.format(t2-t1))
 
     elif int(inputs[0]) == 5:
         t1=time.process_time()
         print("Cargando Video con mas likes segun Tags ....")
+        country= input("Ingrese el pais del video que desea ver:\n")
+        tag=input("Ingrese el tag del video que desea ver:\n")
+        num=input("Ingrese el numero de videos que desea ver:\n")
+        controller.req4(country,tag,num,catalog)
         t2=time.process_time()
         print('El tiempo de procesamiento es: {}.'.format(t2-t1))
     

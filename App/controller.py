@@ -68,15 +68,20 @@ def loadVideos(catalog):
 
 def req1(country,category,num,catalog):
     video =model.videosTrending(country,category,catalog)
-    sList = model.sort(video,'mergesort')
+    sList = model.sortViews(video,'mergesort')
     lst = model.newSList(sList,1,int(num))
     model.presantacion(lst)
 
+def req2(country,catalog):
+    lr=model.duracionTen(country,catalog)
+    print(model.presentacionReq2(lr))
+
+
 def req4(country,tag,num,catalog):
     video=model.tagsEsp(country,tag,catalog)
-    #sList = model.sort(video,'selectionsort')
-    #lst = model.newSList(video,0,int(num)-1)
-    model.presantacionTag(video)
+    sList = model.sortLikes(video,'mergesort')
+    lst = model.newSList(sList,1,int(num))
+    model.presantacionTag(lst)
     
 
 

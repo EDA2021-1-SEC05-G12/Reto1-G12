@@ -114,39 +114,54 @@ def newSList(lst, pos, numelem):
 def compVideosByViews(video1,video2):
     if int(video1["views"]) > int(video2["views"]):
         return True
-    else: 
-        if int(video1["likes"]) > int(video2["likes"]):
-            return True
-        else:
-            return False 
+    else:
+        return False 
+
+def compVideosByLikes(video1,video2):
+    if int(video1["likes"]) > int(video2["likes"]):
+        return True
+    else:
+        return False 
 # Funciones de ordenamiento
 
-def sort(lst, fun):
+def sortViews(lst, fun):
     if fun == "shellsort":
-        return shesort(lst)
+        return shesort(lst,compVideosByViews)
     elif fun == "mergesort":
-        return mergesort(lst)
+        return mergesort(lst,compVideosByViews)
     elif fun == "quicksort":
-        return quicksort(lst)
+        return quicksort(lst,compVideosByViews)
     elif fun == "selectionsort":
-        return selesort(lst)
+        return selesort(lst,compVideosByViews)
     else:
         print("Funcion de ordenamiento no existe.")
 
-def selesort(lst):
-    return sel.sort(lst, lst["cmpfunction"])
+def sortLikes(lst, fun):
+    if fun == "shellsort":
+        return shesort(lst,compVideosByLikes)
+    elif fun == "mergesort":
+        return mergesort(lst,compVideosByLikes)
+    elif fun == "quicksort":
+        return quicksort(lst,compVideosByLikes)
+    elif fun == "selectionsort":
+        return selesort(lst,compVideosByLikes)
+    else:
+        print("Funcion de ordenamiento no existe.")
 
-def insersort(lst):
-    return ins.sort(lst, lst["cmpfunction"])
+def selesort(lst,cmpfunction):
+    return sel.sort(lst, cmpfunction)
 
-def shesort(lst):
-    return she.sort(lst, lst["cmpfunction"])
+def insersort(lst,cmpfunction):
+    return ins.sort(lst, cmpfunction)
 
-def quicksort(lst):
-    return qui.sort(lst, lst["cmpfunction"])
+def shesort(lst,cmpfunction):
+    return she.sort(lst, cmpfunction)
 
-def mergesort(lst):
-    return mer.sort(lst, lst["cmpfunction"])
+def quicksort(lst,cmpfunction):
+    return qui.sort(lst, cmpfunction)
+
+def mergesort(lst,cmpfunction):
+    return mer.sort(lst, cmpfunction)
 
 def videosTrending(country,category,catalog):
     videos= findVideos(country,category,catalog)
@@ -195,6 +210,38 @@ def presantacionTag(l):
         print('Title: '+i['title']+'\t'+'Channel Title: '+i['channel_title']+'\t'+'Publish Time: '+str(i['publish_time'])+'\t'+'Views: '+i['views']+'\t'+'Likes: '+i['likes']+'\t'+'Dislikes: '+i['dislikes']+'\t'+'Tags: '+i['tags']+'\n'+'\n')
 
 
+def duracionTen(country,catalog):
+    videos=catalog['videos']
+    c= catalog['country']
+    z = mp.get(c,country)['value']
+    d=mp.newMap(numelements=1)
+    for x in z:
+        t=lt.getElement(videos,x)
+        if mp.contains(d,t['video_id']):
+            v=mp.get(d,t['video_id'])['value']
+            v+=1
+            mp.put(d,t['video_id'],v)
+        else:
+            mp.put(d,t['video_id'],1)
+    temp= None
+    mayor = 0
+    keySet= mp.keySet(d)
+    iterator=lt.iterator(keySet)
+    for k in iterator:
+        tv=mp.get(d,k)['value']
+        if tv > mayor:
+            mayor= tv
+            temp =k
+    for y in z:
+        t=lt.getElement(videos,y)
+        if t['video_id']==temp:
+            lr=[t['title'],t['channel_title'],t['country'],mayor]
+            return lr
+
+def presentacionReq2(lr):
+    print('Titulo: '+lr[0]+'\n'+'Nombre del canal: '+lr[1]+'\n'+'Pais: '+lr[2]+'\n'+'Dias: '+str(lr[3]))
+
+    
 
     
 
